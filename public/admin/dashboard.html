@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel ADMIN | Iveth & Yola</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="brand">IVETH <span>&</span> YOLA</div>
+        <button id="logoutButton">TERMINAR SESSÃO</button>
+    </header>
+
+    <main class="dashboard">
+        <p class="eyebrow">ÁREA DE ADMINISTRAÇÃO</p>
+        <h1>Painel de controlo</h1>
+        <p class="subtitle">Gestão e acompanhamento do casamento.</p>
+
+        <section class="stats">
+            <article class="stat-card">
+                <span>CONVIDADOS</span>
+                <strong id="guestCount">—</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>CONFIRMADOS</span>
+                <strong id="confirmedCount">—</strong>
+            </article>
+
+            <article class="stat-card">
+                <span>NÃO CONFIRMADOS</span>
+                <strong id="declinedCount">—</strong>
+            </article>
+        </section>
+
+        <section class="content-card">
+            <h2>Lista de convidados</h2>
+            <p>Acompanha as confirmações de presença.</p>
+
+            <div id="guestList"></div>
+        </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+CREATE TABLE IF NOT EXISTS admins (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password_hash TEXT NOT NULL,
+    role VARCHAR(30) NOT NULL DEFAULT 'admin',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS admins_email_unique
+ON admins (LOWER(email));
+
+
+CREATE TABLE IF NOT EXISTS guests (
+    id BIGSERIAL PRIMARY KEY,
+    full_name VARCHAR(200) NOT NULL,
+    phone VARCHAR(40),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE IF NOT EXISTS rsvps (
+    id BIGSERIAL PRIMARY KEY,
+    guest_id BIGINT NOT NULL UNIQUE
+        REFERENCES guests(id) ON DELETE CASCADE,
+    attending BOOLEAN NOT NULL,
+    companions INTEGER NOT NULL DEFAULT 0
+        CHECK (companions >= 0),
+    submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE IF NOT EXISTS messages (
+    id BIGSERIAL PRIMARY KEY,
+    rsvp_id BIGINT NOT NULL UNIQUE
+        REFERENCES rsvps(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE IF NOT EXISTS gifts (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    description TEXT,
+    amount NUMERIC(12,2),
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE IF NOT EXISTS settings (
+    setting_key VARCHAR(150) PRIMARY KEY,
+    setting_value JSONB NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
